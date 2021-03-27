@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Present data</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+        .countLines {
+            counter-reset: trCount;
+            overflow: auto;
+            white-space: nowrap;
+        }
+        .countLines tr td:first-child:before {
+            counter-increment: trCount;
+            content:counter(trCount);
+        }
+    </style>
+</head>
+<body>
+<h1>Религиозные объекты Русской православной церкви</h1>
+<br><br>
+<a href="/churches/general">Вернуться на главную страницу</a>
+<br><br>
+
+<div>
+    <input class="form-control" type="text" id="search-text" onkeyup="tableSearch()">
+    <br><br>
+    <table border="1" class="countLines" id="info-table">
+        <tr>
+            <th>№</th>
+            <th>Наименование объекта</th>
+            <th>Адрес</th>
+            <th>Станция метро</th>
+            <th>Линия метро</th>
+            <th>Сайт</th>
+        </tr>
+        <tr th:each="church : ${churches}">
+            <td></td>
+            <td th:utext="${church.getName()}"></td>
+            <td th:utext="${church.getAdress()}"></td>
+            <td th:utext="${church.getMetroStation()}"></td>
+            <td th:utext="${church.getMetroLine()}"></td>
+            <td th:utext="${church.getWebsite()}"></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    function tableSearch() {
+        let phrase = document.getElementById('search-text');
+        let table = document.getElementById('info-table');
+        let regPhrase = new RegExp(phrase.value, 'i');
+        let flag = false;
+        for (let i = 1; i < table.rows.length; i++) {
+            flag = false;
+            for (let j = table.rows[i].cells.length - 1; j >= 0; j--) {
+                flag = regPhrase.test(table.rows[i].cells[j].innerHTML);
+                if (flag) break;
+            }
+            if (flag) {
+                table.rows[i].style.display = "";
+            } else {
+                table.rows[i].style.display = "none";
+            }
+        }
+    }
+</script>
+</body>
+</html>
