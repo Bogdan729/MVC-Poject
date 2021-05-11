@@ -6,28 +6,31 @@
     <style>
         table {
             border-collapse: collapse;
+            table-layout: fixed;
+            width: 100%;
         }
-        .countLines {
-            counter-reset: trCount;
-            overflow: auto;
-            white-space: nowrap;
+        a {
+            color: #4179ff !important;
+            text-decoration: none
         }
-        .countLines tr td:first-child:before {
-            counter-increment: trCount;
-            content:counter(trCount);
+        td, th {
+            border: 1px solid #F50;
+            padding: 19px;
+            word-break: break-all;
         }
     </style>
 </head>
 <body>
 <h1>Религиозные объекты Русской православной церкви</h1>
 <br><br>
-<a href="/churches/general">Вернуться на главную страницу</a>
+<form  class="start" th:action="@{/churches/first}">
+    <button type="submit">Вернуться</button>
+</form>
 <br><br>
-
-<div>
+<div class="table">
     <input class="form-control" type="text" id="search-text" onkeyup="tableSearch()">
     <br><br>
-    <table border="1" class="countLines" id="info-table">
+    <table id="info-table">
         <tr>
             <th>№</th>
             <th>Наименование объекта</th>
@@ -36,17 +39,18 @@
             <th>Линия метро</th>
             <th>Сайт</th>
         </tr>
-        <tr th:each="church : ${churches}">
-            <td></td>
+        <tr th:each="church, state : ${churches}">
+            <td th:utext="${state.count}"></td>
             <td th:utext="${church.getName()}"></td>
-            <td th:utext="${church.getAdress()}"></td>
+            <td th:utext="${church.getAddress()}"></td>
             <td th:utext="${church.getMetroStation()}"></td>
             <td th:utext="${church.getMetroLine()}"></td>
-            <td th:utext="${church.getWebsite()}"></td>
+            <td>
+                <a th:href="${'http://' + church.getWebsite()}" th:utext="${church.getWebsite()}" target="_blank"></a>
+            </td>
         </tr>
     </table>
 </div>
-
 <script>
     function tableSearch() {
         let phrase = document.getElementById('search-text');

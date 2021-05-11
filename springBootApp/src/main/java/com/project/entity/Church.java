@@ -1,25 +1,29 @@
 package com.project.entity;
 
+import com.project.types.PostgreSqlStringArrayType;
 import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
 import java.util.Arrays;
 
 @Entity
 @Table(name = "churches")
+@TypeDef(name = "string-array", typeClass = PostgreSqlStringArrayType.class)
 public class Church {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(name = "number")
+    private String number;
     @Column(name = "name")
     private String name;
     @Column(name = "adm_area")
     private String admArea;
     @Column(name = "district")
     private String district;
-    @Column(name = "adress")
-    private String adress;
+    @Column(name = "address")
+    private String address;
     @Column(name = "metro_station")
     private String metroStation;
     @Column(name = "metro_line")
@@ -27,23 +31,24 @@ public class Church {
     @Column(name = "website")
     private String website;
     @Column(columnDefinition = "text[]", name = "phone_numbers")
-    @Type(type = "com.project.type.PostgreSqlStringArrayType")
+    @Type(type = "string-array")
     private String[] phoneNumbers;
     @Column(columnDefinition = "text[]")
-    @Type(type = "com.project.type.PostgreSqlStringArrayType")
+    @Type(type = "string-array")
     private String[] coordinates;
     @Column(name = "coordinate_type")
     private String coordinateType;
 
     public Church() {}
 
-    public Church(String name, String admArea, String district, String adress,
+    public Church(String number, String name, String admArea, String district, String address,
                   String metroStation, String metroLine, String website,
                   String[] phoneNumbers, String[] coordinates, String coordinateType) {
+        this.number = number;
         this.name = name;
         this.admArea = admArea;
         this.district = district;
-        this.adress = adress;
+        this.address = address;
         this.metroStation = metroStation;
         this.metroLine = metroLine;
         this.website = website;
@@ -58,6 +63,14 @@ public class Church {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
     }
 
     public String getName() {
@@ -84,12 +97,12 @@ public class Church {
         this.district = district;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     public String getMetroStation() {
@@ -147,7 +160,7 @@ public class Church {
                 ", name='" + name + '\'' +
                 ", admArea='" + admArea + '\'' +
                 ", district='" + district + '\'' +
-                ", adress='" + adress + '\'' +
+                ", address='" + address + '\'' +
                 ", metroStation='" + metroStation + '\'' +
                 ", metroLine='" + metroLine + '\'' +
                 ", website='" + website + '\'' +

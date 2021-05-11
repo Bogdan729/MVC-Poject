@@ -8,7 +8,6 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 
-
 @SpringBootApplication
 
 public class ServingWebContentApplication {
@@ -23,7 +22,7 @@ public class ServingWebContentApplication {
         dataSource.setDriverClassName("org.postgresql.Driver");
         dataSource.setUrl("jdbc:postgresql://localhost:5432/churches");
         dataSource.setUsername("postgres");
-        dataSource.setPassword("postgre");
+        dataSource.setPassword("postgres");
 
         return dataSource;
     }

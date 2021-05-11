@@ -1,4 +1,4 @@
-package com.project.prserJson;
+package com.project.parser;
 
 import com.project.churchJson.RussianChurch;
 import org.springframework.web.client.RestTemplate;

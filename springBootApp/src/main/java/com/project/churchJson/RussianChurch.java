@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonPropertyOrder({
         "global_id",
         "Number",
-        "Cells",
+        "Cells"
 })
 
 public class RussianChurch {
@@ -51,7 +51,7 @@ public class RussianChurch {
 
     @Override
     public String toString() {
-        return "RussianСhurch{" + '\n' +
+        return "RussianChurch{" + '\n' +
                 " globalId=" + globalId + "," + '\n' +
                 " number=" + number + "," + '\n' +
                 " cells=" + cells + '\n' +
