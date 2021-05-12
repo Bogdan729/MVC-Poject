@@ -30,48 +30,48 @@ public class ChurchController {
         return "present";
     }
 
-    @GetMapping("/first")
+    @GetMapping("/start")
     public String test(Model model) {
         if (churchDao.getCount() == 0) {
             model.addAttribute("churches", churchDao.portion());
-            return "first";
+            return "start";
         }
         if (churchDao.getCount() >= 10) {
-            return "redirect:/churches/second";
+            return "redirect:/churches/middle";
         }
         churchDao.plusItems();
         model.addAttribute("churches", churchDao.portion());
-        return "first";
+        return "start";
     }
 
-    @GetMapping("/second")
+    @GetMapping("/middle")
     public String testMinus(Model model) {
         if (churchDao.getCount() == 0) {
-            return "redirect:/churches/first";
+            return "redirect:/churches/start";
         }
         if (churchDao.getCount() >= churchDao.getTableSize() - 10) {
-            return "redirect:/churches/third";
+            return "redirect:/churches/end";
         }
         model.addAttribute("churches", churchDao.portion());
-        return "second";
+        return "middle";
     }
 
-    @GetMapping("/third")
+    @GetMapping("/end")
     public String thirdPage(Model model) {
         model.addAttribute("churches", churchDao.portion());
-        return "third";
+        return "end";
     }
 
     @GetMapping("/plus")
     public String plusItems() {
         churchDao.plusItems();
-        return "redirect:/churches/second";
+        return "redirect:/churches/middle";
     }
 
     @GetMapping("/minus")
     public String minusItems() {
         churchDao.minusItems();
-        return "redirect:/churches/second";
+        return "redirect:/churches/middle";
     }
 
     @GetMapping("/download")
@@ -79,5 +79,4 @@ public class ChurchController {
     public FileSystemResource download() {
         return new FileSystemResource("D:/ProjectSprigBoot/springBootApp/src/main/resources/churches.json");
     }
-
 }

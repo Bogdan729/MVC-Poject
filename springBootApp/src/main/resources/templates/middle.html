@@ -21,7 +21,25 @@
         width: 15%;
         padding-left: 10px;
     }
+    button {
+        color: #fff;
+        text-decoration: none;
+        user-select: none;
+        background: rgb(212,75,56);
+        padding: .7em 1.5em;
+        outline: none;
+        text-align: center;
+        font-weight:bold;
+        border-radius: 5px;
+        border: white;
+    }
+    button:hover { background: rgb(232,95,76); }
+    button:active { background: rgb(152,15,0); }
     a {
+        text-decoration: none;
+        color: white;
+    }
+    a.table-link {
         color: #4179ff !important;
         text-decoration: none;
     }
@@ -31,12 +49,12 @@
 <br><br>
 <div class="wrapper">
     <div class="inline">
-        <form  class="start" th:action="@{/churches/minus}">
+        <form th:action="@{/churches/minus}">
             <button type="submit">   <<   </button>
         </form>
     </div>
     <div class="inline">
-        <form  class="start" th:action="@{/churches/plus}">
+        <form th:action="@{/churches/plus}">
             <button type="submit">   >>   </button>
         </form>
     </div>
@@ -46,12 +64,12 @@
         </form>
     </div>
     <div class="inline">
-        <form  class="start" th:action="@{/churches/update}">
+        <form th:action="@{/churches/update}">
             <button type="submit">Обновить таблицу</button>
         </form>
     </div>
     <div class="inline">
-        <form th:action="@{/churches/general}">
+        <form action="#">
             <button><a th:href="@{|/churches/download|}" download>Скачать таблицу (.json)</a></button>
         </form>
     </div>
@@ -73,7 +91,7 @@
         <td th:utext="${church.getMetroStation()}"></td>
         <td th:utext="${church.getMetroLine()}"></td>
         <td>
-            <a th:href="${'http://' + church.getWebsite()}" th:utext="${church.getWebsite()}" target="_blank"></a>
+            <a class="table-link" th:href="${'http://' + church.getWebsite()}" th:utext="${church.getWebsite()}" target="_blank"></a>
         </td>
     </tr>
 </table>

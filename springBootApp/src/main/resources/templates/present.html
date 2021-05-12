@@ -9,21 +9,39 @@
             table-layout: fixed;
             width: 100%;
         }
-        a {
-            color: #4179ff !important;
-            text-decoration: none
+        button {
+            color: #fff;
+            text-decoration: none;
+            user-select: none;
+            background: rgb(212,75,56);
+            padding: .7em 1.5em;
+            outline: none;
+            text-align: center;
+            font-weight:bold;
+            border-radius: 5px;
+            border: white;
         }
+        button:hover { background: rgb(232,95,76); }
+        button:active { background: rgb(152,15,0); }
         td, th {
             border: 1px solid #F50;
             padding: 19px;
             word-break: break-all;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        a.table-link {
+            color: #4179ff !important;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
 <h1>Религиозные объекты Русской православной церкви</h1>
 <br><br>
-<form  class="start" th:action="@{/churches/first}">
+<form th:action="@{/churches/start}">
     <button type="submit">Вернуться</button>
 </form>
 <br><br>
@@ -46,7 +64,7 @@
             <td th:utext="${church.getMetroStation()}"></td>
             <td th:utext="${church.getMetroLine()}"></td>
             <td>
-                <a th:href="${'http://' + church.getWebsite()}" th:utext="${church.getWebsite()}" target="_blank"></a>
+                <a class="table-link" th:href="${'http://' + church.getWebsite()}" th:utext="${church.getWebsite()}" target="_blank"></a>
             </td>
         </tr>
     </table>
