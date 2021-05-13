@@ -5,17 +5,16 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Arrays;
 
 @Entity
 @Table(name = "churches")
 @TypeDef(name = "string-array", typeClass = PostgreSqlStringArrayType.class)
-public class Church {
+public class Church implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "number")
-    private String number;
     @Column(name = "name")
     private String name;
     @Column(name = "adm_area")
@@ -41,10 +40,9 @@ public class Church {
 
     public Church() {}
 
-    public Church(String number, String name, String admArea, String district, String address,
+    public Church(String name, String admArea, String district, String address,
                   String metroStation, String metroLine, String website,
                   String[] phoneNumbers, String[] coordinates, String coordinateType) {
-        this.number = number;
         this.name = name;
         this.admArea = admArea;
         this.district = district;
@@ -63,14 +61,6 @@ public class Church {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getNumber() {
-        return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public String getName() {

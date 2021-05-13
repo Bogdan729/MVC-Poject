@@ -2,6 +2,7 @@ package com.project.dao;
 
 import com.project.churchJson.RussianChurch;
 import com.project.entity.Church;
+import com.project.serialized.Serializer;
 import com.project.utils.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
@@ -30,7 +31,8 @@ public class ChurchDao {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public ChurchDao() {}
+    public ChurchDao() {
+    }
 
     public int getCount() {
         return count;
@@ -89,7 +91,8 @@ public class ChurchDao {
                             return churches.length;
                         }
                     });
-        } catch (SQLException ignore) {}
+        } catch (SQLException ignore) {
+        }
     }
 
     public void clearTable() {
@@ -105,7 +108,7 @@ public class ChurchDao {
 
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession()) {
             session.beginTransaction();
-            churchList = session.createQuery("from Church order by number").getResultList();
+            churchList = session.createQuery("from Church order by id").getResultList();
             session.getTransaction().commit();
         }
 
@@ -117,7 +120,7 @@ public class ChurchDao {
     }
 
     public void minusItems() {
-            count -= 10;
+        count -= 10;
     }
 
     public List<Church> portion() {
@@ -126,7 +129,7 @@ public class ChurchDao {
         try (Session session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession()) {
             session.beginTransaction();
 
-            String hql = "FROM Church";
+            String hql = "FROM Church order by id";
             Query query = session.createQuery(hql);
             query.setFirstResult(count);
             query.setMaxResults(10);
@@ -145,5 +148,21 @@ public class ChurchDao {
             session.createSQLQuery("ALTER SEQUENCE churches_tb_number_seq RESTART WITH 1;").executeUpdate();
             session.getTransaction().commit();
         }
+    }
+
+    public Church getChurchById(int id) {
+        Church church;
+
+        try (Session session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession()) {
+            session.beginTransaction();
+
+            String hql = "FROM Church as church where church.id = :id";
+            Query query = session.createQuery(hql);
+            query.setParameter("id", id);
+            church = (Church) query.uniqueResult();
+            session.getTransaction().commit();
+        }
+
+        return church;
     }
 }

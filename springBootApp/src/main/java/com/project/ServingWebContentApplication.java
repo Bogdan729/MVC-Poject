@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 
 public class ServingWebContentApplication {
     public static void main(String[] args) {
+        System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(ServingWebContentApplication.class, args);
     }
 

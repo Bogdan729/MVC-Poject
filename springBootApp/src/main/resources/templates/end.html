@@ -11,6 +11,7 @@
         width: 100%;
     }
     td, th {
+        text-align: center;
         border: 1px solid #F50;
         padding: 19px;
         word-break: break-word;
@@ -39,6 +40,10 @@
         color: #4179ff !important;
         text-decoration: none;
     }
+    a {
+        text-decoration: none;
+        color: white;
+    }
 </style>
 <body>
 <h1>Религиозные объекты Русской православной церкви</h1>
@@ -47,6 +52,11 @@
     <div class="inline">
         <form th:action="@{/churches/minus}">
             <button type="submit">   <<   </button>
+        </form>
+    </div>
+    <div class="inline">
+        <form th:action="@{/churches/favorites}">
+            <button type="submit">Избранное</button>
         </form>
     </div>
     <div class="inline">
@@ -74,15 +84,21 @@
         <th>Станция метро</th>
         <th>Линия метро</th>
         <th>Сайт</th>
+        <th>Добавить в избранное</th>
     </tr>
     <tr th:each="church : ${churches}">
-        <td th:utext="${church.getNumber()}"></td>
+        <td th:utext="${church.getId()}"></td>
         <td th:utext="${church.getName()}"></td>
         <td th:utext="${church.getAddress()}"></td>
         <td th:utext="${church.getMetroStation()}"></td>
         <td th:utext="${church.getMetroLine()}"></td>
         <td>
             <a class="table-link" th:href="${'http://' + church.getWebsite()}" th:utext="${church.getWebsite()}" target="_blank"></a>
+        </td>
+        <td>
+            <form th:method="POST" th:action="@{/churches/add-to-favorite}">
+                <button type="submit" th:value="${church.getId()}" th:name="id">+</button>
+            </form>
         </td>
     </tr>
 </table>
